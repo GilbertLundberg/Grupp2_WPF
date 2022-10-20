@@ -22,14 +22,15 @@ namespace Grupp2_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<string> techList = new List<string>();
+        private List<string> techs = new List<string>();
+        private List<string> messages = new List<string>();
         public MainWindow()
         {
             InitializeComponent();
             
         }
 
-        private void btnGenerateWebsite_Click(object sender, RoutedEventArgs e)
+        private void btn_GenerateWebsite_Click(object sender, RoutedEventArgs e)
         {
             string[] techniques = { "   C#", "daTAbaser", "WebbuTVeCkling ", "clean Code   " };
             string[] messagesToClass = { "Glöm inte att övning ger färdighet!", "Öppna boken på sida 257." };
@@ -37,14 +38,14 @@ namespace Grupp2_WPF
             /*
              * Skriva ut data
              */
-            printPage();
+            PrintPage();
 
-            string printStart()
+            string PrintStart()
             {
                 string start = "<!DOCTYPE html>\n<html>\n<body>\n<main>\n";
                 return start;
             }
-            string printWelcome(string className, string[] message)
+            string PrintWelcome(string className, string[] message)
             {
                 string welcome = $"<h1> Välkomna {className}! </h1>";
 
@@ -57,26 +58,26 @@ namespace Grupp2_WPF
 
                 return welcome + welcomeMessage;
             }
-            string printKurser()
+            string PrintTech()
             {
-                string kurser = courseGenerator(techniques);
+                string kurser = CourseGenerator(techniques);
                 return kurser;
             }
-            string printEnd()
+            string PrintEnd()
             {
                 string end = "</main>\n</body>\n</html>";
                 return end;
             }
 
 
-            void printPage()
+            void PrintPage()
             {
-                string website = printStart() + printWelcome("Klass A", messagesToClass) + printKurser() + printEnd();
-                txtHtmlBox.Text = website;
+                string website = PrintStart() + PrintWelcome("Klass A", messagesToClass) + PrintTech() + PrintEnd();
+                txb_HtmlBox.Text = website;
             }
 
 
-            string courseGenerator(string[] techniques)
+            string CourseGenerator(string[] techniques)
             {
                 string kurser = "";
 
@@ -90,7 +91,7 @@ namespace Grupp2_WPF
             }
         }
 
-        private void btnSaveWebsite_Click(object sender, RoutedEventArgs e)
+        private void btn_SaveWebsite_Click(object sender, RoutedEventArgs e)
         {
             //OpenFileDialog openFileDialog = new OpenFileDialog();
             //openFileDialog.ShowDialog();
@@ -105,14 +106,14 @@ namespace Grupp2_WPF
             if (result == true)
             {
                 // Save document
-                string txt = txtHtmlBox.Text;
+                string txt = txb_HtmlBox.Text;
                 string filename = dlg.FileName;
                 File.WriteAllText(filename, txt);
             }
             
         }
 
-        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
+        private void btn_OpenFile_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             //dlg.FileName = "Document"; // Default file name
@@ -124,13 +125,14 @@ namespace Grupp2_WPF
             if (result == true)
             {
                string file =  File.ReadAllText(dlg.FileName);
-               txtHtmlBox.Text = file;  
+               txb_HtmlBox.Text = file;  
             }
         }
 
-        private void btnTechGenerator_Click(object sender, RoutedEventArgs e)
+        private void btn_AddTech_Click(object sender, RoutedEventArgs e)
         {
-            
+            messages.Add(txt_messages.Text);
+            messages.Clear();
         }
     }
 }
